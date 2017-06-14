@@ -7,6 +7,14 @@ class Turtle:
 
 	wc = None
 	ppos = pos = None 
+	
+	"""
+	Debug purposes
+	minx = 65563
+	maxx = -65563
+	miny = 65563
+	maxy = -65563
+	"""
 
 	def __init__(self, wc, x, y):
 		self.ppos = self.pos = Point(x,y)
@@ -28,6 +36,18 @@ class Turtle:
 		line = Line(self.ppos, self.pos)
 		line.draw(self.wc)
 
+		"""
+		Debug purposes
+		if self.minx > self.pos.x:
+			self.minx = self.pos.x
+		if self.maxx < self.pos.x:
+			self.maxx = self.pos.x
+		if self.miny > self.pos.y:
+			self.miny = self.pos.y
+		if self.maxy < self.pos.y:
+			self.maxy = self.pos.y
+		"""
+
 	def mark(self, d):
 		''' Mark a circle around the turtle'''
 		circle = Circle(self.pos, d)
@@ -48,13 +68,13 @@ class LTree:
 			rep = 'F'
 			func = (Turtle.move, 5)
 
-	def parse (self, term, env, depth=6):
-		assert type(term)==str
+	def parse (self, axiom, env, depth):
+		assert type(axiom)==str
 		if depth <= 0:
 			return []
 
 		syn = []
-		for s in term:
+		for s in axiom:
 			if (s==self.Sym.Left.rep):
 				syn += [self.Sym.Left.func]
 			elif (s==self.Sym.Right.rep):
@@ -71,18 +91,51 @@ class LTree:
 		for func, arg in syn:
 			func(turtle, arg)
 	
-def hilbertcurve(depth=3):
+def hilbertcurve(depth):
+	''' Renders a hilbert curve of given depth '''
 	width=max(30, (5*(2**depth)-5))
 	win = GraphWin("Hilbert curve", width, width)
 	gp = Turtle(win, 0,0)
 
+	# parse l-system using alphabet and axiom
 	tree = LTree()
 	env = {'A':"-BF+AFA+FB-", 'B':"+AF-BFB-FA+"}
-	syn = tree.parse("-BF+AFA+FB-", env, depth)
+	axiom = "-BF+AFA+FB-"
+	syn = tree.parse(axiom, env, depth)
+
+	# render tree
 	tree.exec(gp, syn)
 
 	win.getMouse()
 	win.close()
 
+def kochcurve(depth):
+	''' Renders a koch curve of order depth '''
+	def calcheight (depth):
+		if depth<=1:
+			return 0
+		elif depth==2:
+			return 5
+		else:
+			return 15*(3**(depth-3))+calcheight(depth-1)
+	height = max(30, calcheight(depth))
+	width = max(30, 5*(3**(depth-1)))
+	win = GraphWin("Koch curve", width, height)
+	gp = Turtle(win, width,height)
+	gp.direction = math.pi
+
+	tree = LTree()
+	env = {'A':"A+FA-FA-FA+FA"}
+	axiom = 'FA'
+	syn = tree.parse(axiom, env, depth)
+
+	# render tree
+	tree.exec(gp, syn)
+
+	#print("X1:{} X2:{} Y1:{} Y2:{}".format(gp.minx,gp.maxx,gp.miny,gp.maxy))
+
+	win.getMouse()
+	win.close()
+
 if __name__ == "__main__":
-	hilbertcurve(6)
+	kochcurve(5)
