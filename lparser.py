@@ -114,8 +114,6 @@ def kochcurve(depth):
 	def calcheight (depth):
 		if depth<=1:
 			return 0
-		elif depth==2:
-			return 5
 		else:
 			return 15*(3**(depth-3))+calcheight(depth-1)
 	height = max(30, calcheight(depth))
