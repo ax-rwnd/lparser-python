@@ -1,8 +1,9 @@
 from graphics import *
+import math
 
 class Turtle:
 	''' Simple turtle graphics class. '''
-	direction = 1
+	direction = math.pi/2
 
 	wc = None
 	ppos = pos = None 
@@ -12,23 +13,13 @@ class Turtle:
 		self.wc = wc
 
 	def turn(self, delta):
-		self.direction = (self.direction+delta)%4
+		self.direction += delta
 
 	def move(self, dist, adraw=True):
 		''' Move with respect to direction, drawing is optional'''
 		self.ppos = self.pos
-
-		if (self.direction==0):
-			self.pos = Point(self.ppos.x, self.ppos.y+dist)
-		elif (self.direction==2):
-			self.pos = Point(self.ppos.x, self.ppos.y-dist)
-		elif (self.direction==1):
-			self.pos = Point(self.ppos.x+dist, self.ppos.y)
-		elif (self.direction==3):
-			self.pos = Point(self.ppos.x-dist, self.ppos.y)
-		else:
-			assert not (0<=self.direction<=3) #invalid direction
-
+		self.pos = Point(self.ppos.x+dist*math.cos(self.direction),
+				self.ppos.y+dist*math.sin(self.direction))
 		if adraw:
 			self.draw()
 
@@ -49,13 +40,13 @@ class LTree:
 		''' Symbol definitions '''
 		class Left:
 			rep = '-'
-			func = Turtle.turn
+			func = (Turtle.turn, -(math.pi/2))
 		class Right:
 			rep = '+'
-			func = Turtle.turn
+			func = (Turtle.turn, math.pi/2)
 		class Move:
 			rep = 'F'
-			func = Turtle.move
+			func = (Turtle.move, 5)
 
 	def parse (self, term, env, depth=6):
 		assert type(term)==str
@@ -65,11 +56,11 @@ class LTree:
 		syn = []
 		for s in term:
 			if (s==self.Sym.Left.rep):
-				syn += [(Turtle.turn, -1)]
+				syn += [self.Sym.Left.func]
 			elif (s==self.Sym.Right.rep):
-				syn += [(Turtle.turn, 1)]
+				syn += [self.Sym.Right.func]
 			elif (s==self.Sym.Move.rep):
-				syn += [(Turtle.move, 5)]
+				syn += [self.Sym.Move.func]
 			else:
 				assert s in env #error: undefined var
 				syn += self.parse(env[s], env, depth-1)
