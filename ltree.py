@@ -1,4 +1,4 @@
-from turtle import Turtle
+from qturtle import QTurtle
 
 class LTree:
 	''' L-Expression tree'''
@@ -7,13 +7,13 @@ class LTree:
 		''' Symbol definitions '''
 		class Left:
 			rep = '-'
-			func = Turtle.left
+			func = QTurtle.left
 		class Right:
 			rep = '+'
-			func = Turtle.right
+			func = QTurtle.right
 		class Move:
 			rep = 'F'
-			func = Turtle.move
+			func = QTurtle.move
 
 	def parse (self, axiom, env, depth):
 		assert type(axiom)==str

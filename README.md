@@ -1,5 +1,23 @@
 # lparser-python
-A turtle graphics parser/visualizer for 2D L-Systems using python 3 and the *graphics* module (http://mcsp.wartburg.edu/zelle/python).
+A turtle graphics parser/visualizer for 2D L-Systems written in python 3 and QT 5.
 
-## Example
-See *hilbertcurve(depth)* in *lparser.py*.
+## Usage
+Simply run /python3 lparseqt.py/.
+
+## Sample L-Systems
+
+### Hilbert Curve
+Axiom: -BF+AFA+FB-
+Variables:
+A=-BF+AFA+FB-
+B=+AF-BFB-FA+
+
+### Koch Curve
+Axiom: FA
+Variables: A=A+FA-FA-FA+FA
+
+### Sierpinski's Arrowhead Approximation
+Axiom: FA
+Variables:
+A=+FB-FA-FB+
+B=-FA+FB+FA-
