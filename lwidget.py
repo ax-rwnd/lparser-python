@@ -48,7 +48,12 @@ class LWidget(QFrame):
 		sz = self.size()
 		turt = QTurtle(qp, sz.width()/2, sz.height()/2)
 		tree = LTree()
-		syn = tree.parse(self.axiom, self.env, self.depth)
+		try:
+			syn = tree.parse(self.axiom, self.env, self.depth)
+		except ValueError as e:
+			print("ERROR: "+str(e)+" rendering terminated!")
+			return
+
 		tree.exec(turt,syn)
 	
 if __name__ == "__main__":

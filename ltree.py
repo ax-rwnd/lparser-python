@@ -29,8 +29,10 @@ class LTree:
 			elif (s==self.Sym.Move.rep):
 				syn += [self.Sym.Move.func]
 			else:
-				assert s in env #error: undefined var
-				syn += self.parse(env[s], env, depth-1)
+				if not s in env:
+					raise ValueError("Undefined variable '"+s+"'!")
+				else:
+					syn += self.parse(env[s], env, depth-1)
 		return syn
 	
 	def exec(self, turtle, syn):
