@@ -11,6 +11,7 @@ class LWidget(QFrame):
 	axiom = None 
 	env = None
 	depth = None
+	scale = 1
 
 	def __init__(self):
 		super().__init__()
@@ -32,6 +33,7 @@ class LWidget(QFrame):
 	def valueSetEvent(self, event):
 		self.axiom = event['axiom']
 		self.depth = event['depth']
+		self.scale= event['scale']
 		self.env = {}
 		assignments = event['env'].split('\n')
 		for var in assignments:
@@ -47,7 +49,7 @@ class LWidget(QFrame):
 
 	def rendercurve(self, qp):
 		sz = self.size()
-		turt = QTurtle(qp, sz.width()/2, sz.height()/2)
+		turt = QTurtle(qp, sz.width()/2, sz.height()/2, speed=self.scale)
 		tree = LTree()
 		try:
 			syn = tree.parse(self.axiom, self.env, self.depth)

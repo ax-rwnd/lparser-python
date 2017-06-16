@@ -54,7 +54,14 @@ class LParseQT(QMainWindow):
 		self.dspin = QSpinBox()
 		self.dspin.setMinimum(0)
 		self.dspin.setMaximum(99)
+		self.dspin.setValue(1)
 		vargrid.addWidget(self.dspin,0,2)
+
+		self.sspin = QSpinBox()
+		self.sspin.setMinimum(1)
+		self.sspin.setMaximum(99)
+		self.sspin.setValue(5)
+		vargrid.addWidget(self.sspin,1,2)
 
 		# Actual layout
 		vbox.addWidget(self.lrender,1)
@@ -69,7 +76,7 @@ class LParseQT(QMainWindow):
 		self.show()
 
 	def signalRender(self):
-		self.lrender.valueSetEvent({"axiom":self.aedit.text(), "depth":self.dspin.value(), "env":self.vedit.toPlainText()})
+		self.lrender.valueSetEvent({"axiom":self.aedit.text(), "depth":self.dspin.value(), "env":self.vedit.toPlainText(), "scale":self.sspin.value()})
 	
 
 if __name__ == "__main__":
