@@ -62,6 +62,6 @@ class LParseQT(QMainWindow):
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
-	render = RenderPane()
+	render = LParseQT()
 	sys.exit(app.exec_())
 

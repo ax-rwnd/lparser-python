@@ -22,14 +22,15 @@ class LTree:
 
 		syn = []
 		for s in axiom:
-			if (s==self.Sym.Left.rep):
+			if not s in env:
+				raise ValueError("Undefined variable '"+s+"'!")
+			elif (s==self.Sym.Left.rep):
 				syn += [self.Sym.Left.func]
 			elif (s==self.Sym.Right.rep):
 				syn += [self.Sym.Right.func]
 			elif (s==self.Sym.Move.rep):
 				syn += [self.Sym.Move.func]
 			else:
-				assert s in env #error: undefined var
 				syn += self.parse(env[s], env, depth-1)
 		return syn
 	
