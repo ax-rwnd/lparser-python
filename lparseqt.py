@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, qApp, QLineEdit, QLabel, QWidget, QPlainTextEdit, QPushButton, QVBoxLayout,QGridLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, qApp, QLineEdit, QLabel, QWidget, QPlainTextEdit, QPushButton, QVBoxLayout,QGridLayout, QSpinBox
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 
@@ -16,6 +16,7 @@ class LParseQT(QMainWindow):
 	bsubmit = None
 	aedit = None
 	vedit = None
+	dspin = None
 	lrender = None
 	mainwidget = None
 
@@ -50,6 +51,11 @@ class LParseQT(QMainWindow):
 		self.vedit = QPlainTextEdit()
 		vargrid.addWidget(self.vedit,1,1)
 
+		self.dspin = QSpinBox()
+		self.dspin.setMinimum(0)
+		self.dspin.setMaximum(99)
+		vargrid.addWidget(self.dspin,0,2)
+
 		# Actual layout
 		vbox.addWidget(self.lrender,1)
 		vbox.addLayout(vargrid)
@@ -63,7 +69,7 @@ class LParseQT(QMainWindow):
 		self.show()
 
 	def signalRender(self):
-		self.lrender.valueSetEvent({"axiom":self.aedit.text(), "env":self.vedit.toPlainText()})
+		self.lrender.valueSetEvent({"axiom":self.aedit.text(), "depth":self.dspin.value(), "env":self.vedit.toPlainText()})
 	
 
 if __name__ == "__main__":

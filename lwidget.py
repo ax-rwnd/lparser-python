@@ -31,6 +31,7 @@ class LWidget(QFrame):
 	
 	def valueSetEvent(self, event):
 		self.axiom = event['axiom']
+		self.depth = event['depth']
 		self.env = {}
 		assignments = event['env'].split('\n')
 		for var in assignments:
