@@ -20,12 +20,17 @@ class LParseQT(QMainWindow):
 	mainwidget = None
 
 	def toolbarsetup(self):
-		exitAction = QAction(QIcon('render.png'), 'Render', self)
-		exitAction.setShortcut('Ctrl+R')
-		exitAction.triggered.connect(self.signalRender)
+		renderAction = QAction(QIcon.fromTheme("applications-science"), 'Render', self)
+		renderAction.setShortcut('Ctrl+R')
+		renderAction.triggered.connect(self.signalRender)
 
-		self.toolbar = self.addToolBar('Exit')
-		self.toolbar.addAction(exitAction)
+		settingsAction = QAction(QIcon.fromTheme("document-properties"), 'Settings', self)
+		settingsAction.setShortcut('Ctrl+P')
+		settingsAction.triggered.connect(self.signalRender)
+
+		self.toolbar = self.addToolBar('Tools')
+		self.toolbar.addAction(renderAction)
+		self.toolbar.addAction(settingsAction)
 
 	def layoutsetup(self):
 		self.mainwidget = QWidget(self)
@@ -59,9 +64,10 @@ class LParseQT(QMainWindow):
 
 	def signalRender(self):
 		self.lrender.valueSetEvent({"axiom":self.aedit.text(), "env":self.vedit.toPlainText()})
+	
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
-	render = RenderPane()
+	render = LParseQT()
 	sys.exit(app.exec_())
 
