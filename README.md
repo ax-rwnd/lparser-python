@@ -1,6 +1,8 @@
 # lparser-python
 A turtle graphics parser/visualizer for 2D L-Systems written in python 3 and QT 5.
 
+![Rendition of a fractal plant.](/preview.png?raw=true "Fractal Plant")
+
 ## Usage
 Simply run `python3 lparseqt.py`.
 
