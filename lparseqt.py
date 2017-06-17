@@ -56,18 +56,22 @@ class LParseQT(QMainWindow):
 		vargrid.addWidget(self.vedit,1,1)
 
 		# Depth spinner
+		dlabel = QLabel("Depth")
+		vargrid.addWidget(dlabel,0,2)
 		self.dspin = QSpinBox()
 		self.dspin.setMinimum(0)
 		self.dspin.setMaximum(99)
 		self.dspin.setValue(1)
-		vargrid.addWidget(self.dspin,0,2)
+		vargrid.addWidget(self.dspin,0,3)
 
 		# Scale spinner
+		dscale = QLabel("Scale")
+		vargrid.addWidget(dscale,1,2)
 		self.sspin = QSpinBox()
 		self.sspin.setMinimum(1)
 		self.sspin.setMaximum(99)
 		self.sspin.setValue(5)
-		vargrid.addWidget(self.sspin,1,2)
+		vargrid.addWidget(self.sspin,1,3)
 
 		# Actual layout
 		vbox.addWidget(self.lrender,1)
