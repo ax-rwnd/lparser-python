@@ -8,6 +8,7 @@ from qturtle import QTurtle
 from ltree import LTree
 
 class LWidget(QFrame):
+	''' L-Tree curve rendering widget '''
 	axiom = None 
 	env = None
 	depth = None
@@ -31,6 +32,7 @@ class LWidget(QFrame):
 		qp.end()
 	
 	def valueSetEvent(self, event):
+		''' Event to update vars, sent from main window. '''
 		self.axiom = event['axiom']
 		self.depth = event['depth']
 		self.scale= event['scale']
@@ -48,6 +50,7 @@ class LWidget(QFrame):
 		self.repaint()
 
 	def rendercurve(self, qp):
+		''' Draw curve using a turtle '''
 		sz = self.size()
 		turt = QTurtle(qp, sz.width()/2, sz.height()/2, speed=self.scale)
 		tree = LTree()

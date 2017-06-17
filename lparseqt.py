@@ -21,6 +21,7 @@ class LParseQT(QMainWindow):
 	mainwidget = None
 
 	def toolbarsetup(self):
+		''' Adds toolbar to the application. '''
 		renderAction = QAction(QIcon.fromTheme("applications-science"), 'Render', self)
 		renderAction.setShortcut('Ctrl+R')
 		renderAction.triggered.connect(self.signalRender)
@@ -34,29 +35,34 @@ class LParseQT(QMainWindow):
 		self.toolbar.addAction(settingsAction)
 
 	def layoutsetup(self):
+		''' Adds widgets to the application. '''
 		self.mainwidget = QWidget(self)
 		self.setCentralWidget(self.mainwidget)
 
 		vbox = QVBoxLayout()
 		self.lrender = LWidget()
 
+		# Axiom editor
 		vargrid = QGridLayout()
 		alabel = QLabel("Axiom")
 		vargrid.addWidget(alabel,0,0)
 		self.aedit = QLineEdit()
 		vargrid.addWidget(self.aedit,0,1)
 
+		# Variable editor
 		vlabel = QLabel("Variables")
 		vargrid.addWidget(vlabel,1,0)
 		self.vedit = QPlainTextEdit()
 		vargrid.addWidget(self.vedit,1,1)
 
+		# Depth spinner
 		self.dspin = QSpinBox()
 		self.dspin.setMinimum(0)
 		self.dspin.setMaximum(99)
 		self.dspin.setValue(1)
 		vargrid.addWidget(self.dspin,0,2)
 
+		# Scale spinner
 		self.sspin = QSpinBox()
 		self.sspin.setMinimum(1)
 		self.sspin.setMaximum(99)
@@ -69,6 +75,7 @@ class LParseQT(QMainWindow):
 		self.mainwidget.setLayout(vbox)
 
 	def windowsetup(self):
+		''' General window setup. '''
 		self.toolbarsetup()
 		self.layoutsetup()
 
@@ -76,7 +83,11 @@ class LParseQT(QMainWindow):
 		self.show()
 
 	def signalRender(self):
-		self.lrender.valueSetEvent({"axiom":self.aedit.text(), "depth":self.dspin.value(), "env":self.vedit.toPlainText(), "scale":self.sspin.value()})
+		''' Sets values for rendering in the rendering widget. '''
+		self.lrender.valueSetEvent({"axiom":self.aedit.text(),
+						"depth":self.dspin.value(),
+						"env":self.vedit.toPlainText(),
+						"scale":self.sspin.value()})
 	
 
 if __name__ == "__main__":
