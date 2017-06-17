@@ -14,6 +14,12 @@ class LTree:
 		class Move:
 			rep = 'F'
 			func = QTurtle.move
+		class Store:
+			rep = '['
+			func = QTurtle.store
+		class Recall:
+			rep = ']'
+			func = QTurtle.recall
 
 	def parse (self, axiom, env, depth):
 		assert type(axiom)==str
@@ -28,6 +34,10 @@ class LTree:
 				syn += [self.Sym.Right.func]
 			elif (s==self.Sym.Move.rep):
 				syn += [self.Sym.Move.func]
+			elif (s==self.Sym.Store.rep):
+				syn += [self.Sym.Store.func]
+			elif (s==self.Sym.Recall.rep):
+				syn += [self.Sym.Recall.func]
 			else:
 				if not s in env:
 					raise ValueError("Undefined variable '"+s+"'!")

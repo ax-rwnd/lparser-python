@@ -4,6 +4,7 @@ import math
 
 class QTurtle():
 	direction = 0
+	posstack = []
 
 	ppos = pos = None
 	delta = None
@@ -15,11 +16,19 @@ class QTurtle():
 		self.qp = qp
 		self.delta = d
 		self.speed = speed
-
 	def left(self):
 		self.direction -= self.delta
 	def right(self):
 		self.direction += self.delta
+
+	def store(self):
+		self.posstack += [(self.direction,self.pos)]
+	
+	def recall(self):
+		if len(self.posstack)<=0:
+			print("ERROR: popped empty posstack!")
+		else:
+			(self.direction,self.pos) = self.posstack.pop()
 
 	def move(self, draw=True):
 		self.ppos = self.pos
