@@ -7,12 +7,17 @@ from PyQt5.QtCore import Qt
 from qturtle import QTurtle
 from ltree import LTree
 
+import math
+
 class LWidget(QFrame):
 	''' L-Tree curve rendering widget '''
 	axiom = None 
 	env = None
 	depth = None
 	scale = 1
+	xpos = 0
+	ypos = 0
+	delta = 0
 
 	def __init__(self):
 		super().__init__()
@@ -33,9 +38,15 @@ class LWidget(QFrame):
 	
 	def valueSetEvent(self, event):
 		''' Event to update vars, sent from main window. '''
+		def degtorad(degs):
+			return (degs/360)*2*math.pi
+
 		self.axiom = event['axiom']
 		self.depth = event['depth']
 		self.scale= event['scale']
+		self.xpos = event['xpos']
+		self.ypos = event['ypos']
+		self.delta= degtorad(event['delta'])
 		self.env = {}
 		assignments = event['env'].split('\n')
 		for var in assignments:
@@ -52,7 +63,7 @@ class LWidget(QFrame):
 	def rendercurve(self, qp):
 		''' Draw curve using a turtle '''
 		sz = self.size()
-		turt = QTurtle(qp, sz.width()/2, sz.height()/2, speed=self.scale)
+		turt = QTurtle(qp, self.xpos+sz.width()/2, self.ypos+sz.height()/2, d=self.delta, speed=self.scale)
 		tree = LTree()
 		try:
 			syn = tree.parse(self.axiom, self.env, self.depth)

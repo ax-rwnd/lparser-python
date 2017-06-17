@@ -17,6 +17,9 @@ class LParseQT(QMainWindow):
 	aedit = None
 	vedit = None
 	dspin = None
+	xspin = None
+	yspin = None
+	deltaspin = None
 	lrender = None
 	mainwidget = None
 
@@ -55,26 +58,55 @@ class LParseQT(QMainWindow):
 		self.vedit = QPlainTextEdit()
 		vargrid.addWidget(self.vedit,1,1)
 
+		# Align with innergrid
+		dgrid = QGridLayout()
+
 		# Depth spinner
 		dlabel = QLabel("Depth")
-		vargrid.addWidget(dlabel,0,2)
+		dgrid.addWidget(dlabel,0,0)
 		self.dspin = QSpinBox()
 		self.dspin.setMinimum(0)
 		self.dspin.setMaximum(99)
 		self.dspin.setValue(1)
-		vargrid.addWidget(self.dspin,0,3)
+		dgrid.addWidget(self.dspin,0,1)
+
+		# Inner grid to utilize space next to varedit
+		innergrid = QGridLayout()
 
 		# Scale spinner
-		dscale = QLabel("Scale")
-		vargrid.addWidget(dscale,1,2)
+		slabel = QLabel("Scale")
+		innergrid.addWidget(slabel,0,0)
 		self.sspin = QSpinBox()
 		self.sspin.setMinimum(1)
 		self.sspin.setMaximum(99)
 		self.sspin.setValue(5)
-		vargrid.addWidget(self.sspin,1,3)
+		innergrid.addWidget(self.sspin,0,1)
+
+		# Position spinner
+		xlabel = QLabel("X:")
+		self.xspin = QSpinBox()
+		self.xspin.setRange(-1000,1000)
+		innergrid.addWidget(xlabel, 1,0)
+		innergrid.addWidget(self.xspin, 1,1)
+		ylabel = QLabel("Y:")
+		self.yspin = QSpinBox()
+		self.yspin.setRange(-1000,1000)
+		innergrid.addWidget(ylabel, 2,0)
+		innergrid.addWidget(self.yspin, 2,1)
+
+		# Angle spinner
+		deltalabel = QLabel("delta:")
+		innergrid.addWidget(deltalabel, 3,0)
+		self.deltaspin = QSpinBox()
+		self.deltaspin.setRange(0,360)
+		self.deltaspin.setValue(90)
+		innergrid.addWidget(self.deltaspin, 3,1)
+
 
 		# Actual layout
 		vbox.addWidget(self.lrender,1)
+		vargrid.addLayout(dgrid, 0,2)
+		vargrid.addLayout(innergrid, 1,2)
 		vbox.addLayout(vargrid)
 		self.mainwidget.setLayout(vbox)
 
@@ -91,7 +123,10 @@ class LParseQT(QMainWindow):
 		self.lrender.valueSetEvent({"axiom":self.aedit.text(),
 						"depth":self.dspin.value(),
 						"env":self.vedit.toPlainText(),
-						"scale":self.sspin.value()})
+						"scale":self.sspin.value(),
+						"delta":self.deltaspin.value(),
+						"xpos":self.xspin.value(),
+						"ypos":self.yspin.value()})
 	
 
 if __name__ == "__main__":
