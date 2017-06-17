@@ -25,17 +25,13 @@ class LParseQT(QMainWindow):
 
 	def toolbarsetup(self):
 		''' Adds toolbar to the application. '''
-		renderAction = QAction(QIcon.fromTheme("applications-science"), 'Render', self)
+		renderAction = QAction('Render', self)
 		renderAction.setShortcut('Ctrl+R')
 		renderAction.triggered.connect(self.signalRender)
 
-		settingsAction = QAction(QIcon.fromTheme("document-properties"), 'Settings', self)
-		settingsAction.setShortcut('Ctrl+P')
-		settingsAction.triggered.connect(self.signalRender)
-
 		self.toolbar = self.addToolBar('Tools')
+		self.toolbar.setMovable(0)
 		self.toolbar.addAction(renderAction)
-		self.toolbar.addAction(settingsAction)
 
 	def layoutsetup(self):
 		''' Adds widgets to the application. '''

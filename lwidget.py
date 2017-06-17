@@ -57,7 +57,7 @@ class LWidget(QFrame):
 				self.env[l] = r
 			except ValueError:
 				pass
-		print(self.env)
+		#print(self.env)
 		self.repaint()
 
 	def rendercurve(self, qp):
