@@ -123,6 +123,7 @@ class LParseQT(QMainWindow):
 						"delta":self.deltaspin.value(),
 						"xpos":self.xspin.value(),
 						"ypos":self.yspin.value()})
+		self.lrender.renderSystem()
 	
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QFrame
-from PyQt5.QtGui import QPainter, QColor, QPen
+from PyQt5.QtGui import QPainter, QColor, QPen, QPicture
 from PyQt5.QtCore import Qt
 
 from qturtle import QTurtle
@@ -18,6 +18,7 @@ class LWidget(QFrame):
 	xpos = 0
 	ypos = 0
 	delta = 0
+	picture = None
 
 	def __init__(self):
 		super().__init__()
@@ -30,11 +31,23 @@ class LWidget(QFrame):
 		self.setStyleSheet("background:white; border:1px solid rgb(50, 50, 50); ")
 		self.setMinimumSize(200,200)
 
-	def paintEvent(self, event):
+	def renderSystem(self):
+		self.picture = QPicture()
 		qp = QPainter()
-		qp.begin(self)
+
+		qp.begin(self.picture)
 		self.rendercurve(qp)
 		qp.end()
+		self.repaint()
+	
+	def paintEvent(self, event):
+		if self.picture == None:
+			print("Warning: picture not yet rendered")
+		else:
+			qp = QPainter()
+			qp.begin(self)
+			qp.drawPicture(0,0,self.picture)
+			qp.end()
 	
 	def valueSetEvent(self, event):
 		''' Event to update vars, sent from main window. '''
