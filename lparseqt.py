@@ -78,18 +78,6 @@ class LParseQT(QMainWindow):
 		self.sspin.setValue(5)
 		innergrid.addWidget(self.sspin,0,1)
 
-		# Position spinner
-		xlabel = QLabel("X:")
-		self.xspin = QSpinBox()
-		self.xspin.setRange(-1000,1000)
-		innergrid.addWidget(xlabel, 1,0)
-		innergrid.addWidget(self.xspin, 1,1)
-		ylabel = QLabel("Y:")
-		self.yspin = QSpinBox()
-		self.yspin.setRange(-1000,1000)
-		innergrid.addWidget(ylabel, 2,0)
-		innergrid.addWidget(self.yspin, 2,1)
-
 		# Angle spinner
 		deltalabel = QLabel("delta:")
 		innergrid.addWidget(deltalabel, 3,0)
