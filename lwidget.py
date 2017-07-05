@@ -2,7 +2,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QFrame
 from PyQt5.QtGui import QPainter, QColor, QPen, QPicture
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QPoint
 
 from qturtle import QTurtle
 from ltree import LTree
@@ -46,8 +46,21 @@ class LWidget(QFrame):
 		else:
 			qp = QPainter()
 			qp.begin(self)
-			qp.drawPicture(0,0,self.picture)
+			qp.drawPicture(self.xpos, self.ypos, self.picture)
 			qp.end()
+
+	def mousePressEvent(self, event):
+		self.offset = event.pos()
+	
+	def mouseMoveEvent(self, event):
+		newPos = event.pos()
+		self.xpos -= self.offset.x()-newPos.x()
+		self.ypos -= self.offset.y()-newPos.y()
+		self.offset = newPos
+	
+	def mouseReleaseEvent(self, event):
+		self.repaint()
+
 	
 	def valueSetEvent(self, event):
 		''' Event to update vars, sent from main window. '''
