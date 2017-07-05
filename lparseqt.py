@@ -108,9 +108,7 @@ class LParseQT(QMainWindow):
 						"depth":self.dspin.value(),
 						"env":self.vedit.toPlainText(),
 						"scale":self.sspin.value(),
-						"delta":self.deltaspin.value(),
-						"xpos":self.xspin.value(),
-						"ypos":self.yspin.value()})
+						"delta":self.deltaspin.value()})
 		self.lrender.renderSystem()
 	
 

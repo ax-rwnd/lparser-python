@@ -35,6 +35,10 @@ class LWidget(QFrame):
 		self.picture = QPicture()
 		qp = QPainter()
 
+		# these offsets don't make sense anymore
+		self.xpos = 0
+		self.ypos = 0
+
 		qp.begin(self.picture)
 		self.rendercurve(qp)
 		qp.end()
@@ -70,8 +74,6 @@ class LWidget(QFrame):
 		self.axiom = event['axiom']
 		self.depth = event['depth']
 		self.scale= event['scale']
-		self.xpos = event['xpos']
-		self.ypos = event['ypos']
 		self.delta= degtorad(event['delta'])
 		self.env = {}
 		assignments = event['env'].split('\n')
