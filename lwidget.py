@@ -36,8 +36,9 @@ class LWidget(QFrame):
 		qp = QPainter()
 
 		# these offsets don't make sense anymore
-		self.xpos = 0
-		self.ypos = 0
+		sz = self.size()
+		self.xpos = sz.width()/2
+		self.ypos = sz.height()/2
 
 		qp.begin(self.picture)
 		self.rendercurve(qp)
@@ -85,13 +86,11 @@ class LWidget(QFrame):
 				self.env[l] = r
 			except ValueError:
 				pass
-		#print(self.env)
 		self.repaint()
 
 	def rendercurve(self, qp):
 		''' Draw curve using a turtle '''
-		sz = self.size()
-		turt = QTurtle(qp, self.xpos+sz.width()/2, self.ypos+sz.height()/2, d=self.delta, speed=self.scale)
+		turt = QTurtle(qp, self.xpos, self.ypos, d=self.delta, speed=self.scale)
 		tree = LTree()
 		try:
 			syn = tree.parse(self.axiom, self.env, self.depth)
